@@ -14,8 +14,9 @@ STEPS = [
     ("2. Contrats de données", [PYTHON, "check_contracts.py"]),
     ("3. Modèles dbt", [DBT, "run", "--profiles-dir", "."]),
     ("4. Tests dbt", [DBT, "test", "--profiles-dir", "."]),
-    ("5. Rapport", [PYTHON, "report_md.py"]),
-    ("6. Alerte PM2.5", [PYTHON, "alert.py"]),
+    ("5. Santé des données", [PYTHON, "check_health.py"]),
+    ("6. Rapport", [PYTHON, "report_md.py"]),
+    ("7. Alerte PM2.5", [PYTHON, "alert.py"]),
 ]
 
 
