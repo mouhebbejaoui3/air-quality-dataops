@@ -1,0 +1,7 @@
+services:
+  pipeline:
+    build: .
+    volumes:
+      # le dossier du projet est partagé avec le conteneur :
+      # warehouse.duckdb et report.md apparaissent donc sur ta machine
+      - .:/app
