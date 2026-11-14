@@ -2,4 +2,5 @@ duckdb
 pandas
 pandera
 requests
+pyyaml
 dbt-duckdb
