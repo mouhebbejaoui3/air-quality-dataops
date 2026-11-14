@@ -13,7 +13,7 @@ OpenAQ n'a pas de stations en Tunisie, d'où ce choix.
 Le conteneur exécute le pipeline une première fois, puis le planifie **chaque jour à 06:00 (UTC)** avec Prefect.
 Pour l'arrêter : `Ctrl+C`, puis `docker compose down`.
 
-Les étapes : ingestion sans doublons, contrats, `dbt run`, `dbt test`, rapport, alerte PM2.5.
+Les étapes : ingestion sans doublons, contrats, `dbt run`, `dbt test`, santé des données (`health.md`), rapport, alerte PM2.5.
 Si une étape échoue, la suite est bloquée. L'ingestion est réessayée 2 fois en cas de problème réseau.
 
 ## Lancer sans Docker
@@ -29,6 +29,7 @@ Ou étape par étape :
     python check_contracts.py               # contrats de données
     dbt run  --profiles-dir .               # staging -> intermediate -> marts
     dbt test --profiles-dir .               # tests de qualité
+    python check_health.py                  # fraîcheur et complétude -> health.md (bloque si problème)
     python report_md.py                     # rapport Markdown
     python alert.py                         # alerte PM2.5
 
