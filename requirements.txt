@@ -4,3 +4,4 @@ pandera
 requests
 pyyaml
 dbt-duckdb
+prefect
