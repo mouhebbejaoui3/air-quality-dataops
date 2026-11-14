@@ -1,0 +1,14 @@
+version: 2
+
+models:
+  - name: mart_city_pollution
+    columns:
+      - name: city
+        data_tests: [unique, not_null]
+      - name: avg_pm25
+        data_tests: [not_null]
+
+  - name: mart_daily_pollution
+    columns:
+      - name: worst_day_rank
+        data_tests: [unique, not_null]

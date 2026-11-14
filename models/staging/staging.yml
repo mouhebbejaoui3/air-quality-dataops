@@ -1,0 +1,28 @@
+version: 2
+
+models:
+  - name: stg_pollution
+    columns:
+      - name: city
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ["Tunis", "Bizerte", "Sfax"]
+      - name: observed_at
+        data_tests: [not_null]
+      - name: pm2_5_ugm3
+        data_tests: [not_null]
+
+  - name: stg_weather
+    columns:
+      - name: city
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ["Tunis", "Bizerte", "Sfax"]
+      - name: observed_at
+        data_tests: [not_null]
+      - name: temperature_c
+        data_tests: [not_null]

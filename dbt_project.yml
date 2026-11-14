@@ -1,0 +1,20 @@
+name: air_quality
+version: "1.0"
+profile: air_quality
+
+model-paths: ["models"]
+test-paths: ["data_tests"]
+
+vars:
+  # Seuil d'alerte PM2.5 (µg/m³), proche de la limite journalière de l'UE (25).
+  # L'OMS recommande 15 µg/m³ (moyenne sur 24 h).
+  pm25_threshold: 25
+
+models:
+  air_quality:
+    staging:
+      +materialized: view
+    intermediate:
+      +materialized: view
+    marts:
+      +materialized: table

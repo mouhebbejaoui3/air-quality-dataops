@@ -1,0 +1,45 @@
+version: 1.0.0
+kind: DataContract
+apiVersion: v3.2.0
+id: weather
+name: Météo horaire des villes tunisiennes
+status: active
+servers:
+- server: local
+  type: local
+  format: csv
+  path: ./data/weather_cities.csv
+description:
+  purpose: Un fichier CSV, une ligne par ville et par heure. Source Open-Meteo Weather API.
+schema:
+- name: weather
+  physicalType: table
+  properties:
+  - name: city
+    physicalType: string
+    logicalType: string
+    required: true
+    description: Tunis, Bizerte ou Sfax.
+  - name: time
+    physicalType: string
+    logicalType: string
+    required: true
+    description: Heure au format ISO 8601 (AAAA-MM-JJTHH:MM), fuseau GMT.
+  - name: temperature_2m
+    physicalType: decimal
+    logicalType: number
+    required: true
+    description: Température à 2 m en °C.
+    logicalTypeOptions:
+      minimum: -10
+      maximum: 55
+  - name: relative_humidity_2m
+    physicalType: integer
+    logicalType: integer
+    required: true
+    description: Humidité relative à 2 m en %.
+    logicalTypeOptions:
+      minimum: 0
+      maximum: 100
+team:
+  name: equipe-qualite-air

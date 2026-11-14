@@ -1,0 +1,45 @@
+version: 1.0.0
+kind: DataContract
+apiVersion: v3.2.0
+id: pollution
+name: Pollution horaire des villes tunisiennes (PM2.5 et PM10)
+status: active
+servers:
+- server: local
+  type: local
+  format: csv
+  path: ./data/pollution_cities.csv
+description:
+  purpose: Un fichier CSV, une ligne par ville et par heure. Source Open-Meteo Air Quality API (données modélisées CAMS, pas des capteurs).
+schema:
+- name: pollution
+  physicalType: table
+  properties:
+  - name: city
+    physicalType: string
+    logicalType: string
+    required: true
+    description: Tunis, Bizerte ou Sfax.
+  - name: time
+    physicalType: string
+    logicalType: string
+    required: true
+    description: Heure au format ISO 8601 (AAAA-MM-JJTHH:MM), fuseau GMT.
+  - name: pm2_5
+    physicalType: decimal
+    logicalType: number
+    required: true
+    description: PM2.5 en µg/m³.
+    logicalTypeOptions:
+      minimum: 0
+      maximum: 1000
+  - name: pm10
+    physicalType: decimal
+    logicalType: number
+    required: true
+    description: PM10 en µg/m³.
+    logicalTypeOptions:
+      minimum: 0
+      maximum: 2000
+team:
+  name: equipe-qualite-air
