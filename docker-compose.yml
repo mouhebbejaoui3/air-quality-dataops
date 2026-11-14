@@ -1,7 +1,31 @@
 services:
+  # Serveur Prefect : il déclenche les exécutions planifiées et fournit l'interface web (http://localhost:4200)
+  # Il réutilise l'image construite par le service "pipeline" (une seule construction).
+  prefect-server:
+    image: air-quality-pipeline
+    command: prefect server start --host 0.0.0.0
+    ports:
+      - "4200:4200"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:4200/api/health')"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 20s
+    restart: unless-stopped
+
+  # Le pipeline : une exécution au démarrage, puis chaque jour à 06:00 (UTC)
   pipeline:
     build: .
+    image: air-quality-pipeline
+    command: python flow.py
+    depends_on:
+      prefect-server:
+        condition: service_healthy
+    environment:
+      PREFECT_API_URL: http://prefect-server:4200/api
+    restart: unless-stopped
     volumes:
       # le dossier du projet est partagé avec le conteneur :
-      # warehouse.duckdb et report.md apparaissent donc sur ta machine
+      # warehouse.duckdb apparaît donc sur ta machine
       - .:/app

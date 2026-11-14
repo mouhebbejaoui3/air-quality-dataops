@@ -10,12 +10,18 @@ OpenAQ n'a pas de stations en Tunisie, d'où ce choix.
 
     docker compose up --build
 
+Le conteneur exécute le pipeline une première fois, puis le planifie **chaque jour à 06:00 (UTC)** avec Prefect.
+Pour l'arrêter : `Ctrl+C`, puis `docker compose down`.
+
 Les étapes : ingestion sans doublons, contrats, `dbt run`, `dbt test`, rapport, alerte PM2.5.
+Si une étape échoue, la suite est bloquée. L'ingestion est réessayée 2 fois en cas de problème réseau.
 
 ## Lancer sans Docker
 
     pip install -r requirements.txt
-    python run_pipeline.py
+    python run_pipeline.py      # une exécution simple
+    python flow.py --now        # une exécution via Prefect
+    python flow.py              # exécution + planification quotidienne
 
 Ou étape par étape :
 
