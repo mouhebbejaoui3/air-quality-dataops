@@ -49,3 +49,26 @@ Ou étape par étape :
 ## Limites
 - Données modélisées, pas des mesures de capteurs.
 - Les derniers jours sont des prévisions, qui changent d'un téléchargement à l'autre.
+
+## Choix des sources
+
+Deux jeux de données distincts, fournis par deux API Open-Meteo :
+- **Air Quality API** : PM2.5 et PM10 (données modélisées CAMS).
+- **Weather API** : température et humidité.
+
+OpenAQ n'a aucune station en Tunisie, d'où ce choix.
+
+Chaque source a son propre traitement :
+- un contrat de données (`contracts/pollution.yaml`, `contracts/weather.yaml`)
+- un schéma de validation à l'entrée (pandera)
+- sa table brute (`raw.pollution`, `raw.weather`)
+- son modèle de nettoyage (`stg_pollution`, `stg_weather`) et ses tests
+
+Les deux ne se rejoignent qu'en `int_air_quality`, sur ville + heure. On ne joint pas sur les
+coordonnées, car chaque API renvoie la maille de calcul la plus proche (quelques km d'écart).
+
+## Relecture des pull requests (projet individuel)
+
+Projet réalisé seul, sans relecteur. Chaque changement passe par une pull request, que je relis
+moi-même avant de la fusionner, avec la checklist de `.github/pull_request_template.md`.
+La branche `main` exige une pull request et la CI `pipeline` verte.
